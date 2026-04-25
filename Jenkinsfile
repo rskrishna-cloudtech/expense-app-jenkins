@@ -26,9 +26,7 @@ pipeline {
                 }
             }
         }
-    }
 
-    stages {
         stage('Install Dependencies') {
             steps {
                 sh """
@@ -36,9 +34,7 @@ pipeline {
                 """
             }
         }
-    }
 
-    stages {
         stage('Build') {
             steps {
                 sh """
