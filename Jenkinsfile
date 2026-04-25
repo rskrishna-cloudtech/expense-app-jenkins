@@ -39,7 +39,7 @@ pipeline {
             steps {
                 sh """
                 // It will zip all the files and directories from the project folder excep Jenkinsfile and a .zip if of the project if there are any.
-                zip -q -r backend-${appVersion}.zip * -x Jenkingsfile -x backend-${appVersion}.zip
+                zip -q -r backend-${appVersion}.zip * -x Jenkinsfile -x backend-${appVersion}.zip
                 ls -ltr
                 """
             }
