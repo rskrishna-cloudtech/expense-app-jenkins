@@ -9,15 +9,47 @@ pipeline {
         ansiColor('xterm')
     }
 
+    // Declaring a global variable appVersion.
+    environment{
+        def appVersion = ''
+    }
+
     stages {
-        stage('Init') {
+        stage ('Read the Application Version') {
+            steps {
+                // Grrovy script to create the variables.
+                script {
+                    // Will store the entire package.json file into packageJSON variable.
+                    def packageJSON = readJSON file: 'package.json'
+                    // Take the value of version from the packageJSON and store into the appVersion variable.
+                    appVersion = packageJSON.version
+                }
+            }
+        }
+    }
+
+    stages {
+        stage('Install Dependencies') {
             steps {
                 sh """
-                echo "Testing the jenkings pipeline"
+                npm install
                 """
             }
         }
     }
+
+    stages {
+        stage('Build') {
+            steps {
+                sh """
+                // It will zip all the files and directories from the project folder excep Jenkinsfile and a .zip if of the project if there are any.
+                zip -q -r backend-${appVersion}.zip * -x Jenkingsfile -x backend-${appVersion}.zip
+                ls -ltr
+                """
+            }
+        }
+    }
+
     post{
         always{
             deleteDir()
