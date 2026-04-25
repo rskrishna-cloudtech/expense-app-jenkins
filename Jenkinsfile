@@ -10,7 +10,7 @@ pipeline {
     }
 
     // Declaring a global variable appVersion.
-    environment{
+    environment {
         def appVersion = ''
     }
 
@@ -37,8 +37,9 @@ pipeline {
 
         stage('Build') {
             steps {
+                // It will zip all the files and directories from the project folder except Jenkinsfile and a .zip file of the project if there are any.
+
                 sh """
-                // It will zip all the files and directories from the project folder excep Jenkinsfile and a .zip if of the project if there are any.
                 zip -q -r backend-${appVersion}.zip * -x Jenkinsfile -x backend-${appVersion}.zip
                 ls -ltr
                 """
